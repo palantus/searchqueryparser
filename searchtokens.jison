@@ -2,7 +2,7 @@
 %lex
 
 %%
-[a-zA-ZæøåÆØÅ0-9\-?><=_]+  return 'TEXT';
+[a-zA-ZæøåÆØÅ0-9\-?><=_@]+  return 'TEXT';
 "\""                      return 'QUOTE';
 \s+                       return 'SPACE';
 ":"                       return 'COLON';
