@@ -45,6 +45,10 @@ token
       {$$ = {type: "token", token: $1}}
     | STAR
       {$$ = {type: "token", token: $1}}
+    | NOT token
+      {$$ = {type: "not", e: $2}}
+    | PARSTART expression PAREND
+      {$$ = $2}
     ;
 
 expression
@@ -52,10 +56,6 @@ expression
       {$$ = {type: "and", e1: $1, e2: $3}}
     | token OR expression
       {$$ = {type: "or", e1: $1, e2: $3}}
-    | PARSTART expression PAREND
-      {$$ = {type: "par", e: $2}}
-    | NOT expression
-      {$$ = {type: "not", e: $2}}
     | token
       {$$ = $1}
     ;
