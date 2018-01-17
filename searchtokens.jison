@@ -10,6 +10,7 @@
 ")"                       return 'PAREND';
 "|"                       return 'OR';
 "*"                       return 'STAR';
+"!"                       return 'NOT';
 <<EOF>>                   return 'EOF';
 
 /lex
@@ -53,6 +54,8 @@ expression
       {$$ = {type: "or", e1: $1, e2: $3}}
     | PARSTART expression PAREND
       {$$ = {type: "par", e: $2}}
+    | NOT expression
+      {$$ = {type: "not", e: $2}}
     | token
       {$$ = $1}
     ;
