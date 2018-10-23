@@ -31,8 +31,17 @@ textwithspaces
       {$$ = $1}
     ;
 
+textwithcolons
+    : TEXT COLON textwithspaces
+      {$$ = $1 + ":" + $3}
+    | TEXT
+      {$$ = $1}
+    ;
+
 tag
     : QUOTE textwithspaces QUOTE
+      {$$ = $2}
+    | QUOTE textwithcolons QUOTE
       {$$ = $2}
     | TEXT
       {$$ = $1}
