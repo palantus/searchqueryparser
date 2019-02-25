@@ -2,7 +2,7 @@
 %lex
 
 %%
-[a-zA-ZæøåÆØÅ0-9\-?><=_@&%]+  return 'TEXT';
+[a-zA-ZæøåÆØÅ0-9\-?><=_@&%0/.,;]+  return 'TEXT';
 "\""                      return 'QUOTE';
 \s+                       return 'SPACE';
 ":"                       return 'COLON';
@@ -27,12 +27,16 @@ main
 textwithspaces
     : TEXT SPACE textwithspaces
       {$$ = $1 + " " + $3}
+    | TEXT SPACE textwithcolons
+      {$$ = $1 + " " + $3}
     | TEXT
       {$$ = $1}
     ;
 
 textwithcolons
     : TEXT COLON textwithspaces
+      {$$ = $1 + ":" + $3}
+    | TEXT COLON textwithcolons
       {$$ = $1 + ":" + $3}
     | TEXT
       {$$ = $1}
@@ -49,6 +53,8 @@ tag
 
 token
     : tag COLON tag
+      {$$ = {type: "token", token: $3, tag: $1}}
+    | tag COLON STAR
       {$$ = {type: "token", token: $3, tag: $1}}
     | tag
       {$$ = {type: "token", token: $1}}
