@@ -45,6 +45,8 @@ token
       {$$ = {type: "token", token: $3, tag: $1}}
     | tag COLON STAR
       {$$ = {type: "token", token: $3, tag: $1}}
+    | tag COLON
+      {$$ = {type: "token", token: '', tag: $1}}
     | tag
       {$$ = {type: "token", token: $1}}
     | STAR
