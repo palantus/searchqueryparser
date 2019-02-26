@@ -24,28 +24,17 @@ main
         {return $1;}
     ;
 
-textwithspaces
-    : TEXT SPACE textwithspaces
+textwithsymbols
+    : TEXT SPACE textwithsymbols
       {$$ = $1 + " " + $3}
-    | TEXT SPACE textwithcolons
-      {$$ = $1 + " " + $3}
-    | TEXT
-      {$$ = $1}
-    ;
-
-textwithcolons
-    : TEXT COLON textwithspaces
-      {$$ = $1 + ":" + $3}
-    | TEXT COLON textwithcolons
+    | TEXT COLON textwithsymbols
       {$$ = $1 + ":" + $3}
     | TEXT
       {$$ = $1}
     ;
 
 tag
-    : QUOTE textwithspaces QUOTE
-      {$$ = $2}
-    | QUOTE textwithcolons QUOTE
+    : QUOTE textwithsymbols QUOTE
       {$$ = $2}
     | TEXT
       {$$ = $1}
