@@ -2,14 +2,13 @@
 %lex
 
 %%
-[a-zA-ZæøåÆØÅ0-9\-?><=_@&%0/.,;~^]+  return 'TEXT';
+[a-zA-ZæøåÆØÅ0-9\-?><=_@&%0/.,;~^*]+  return 'TEXT';
 "\""                      return 'QUOTE';
 \s+                       return 'SPACE';
 ":"                       return 'COLON';
 "("                       return 'PARSTART';
 ")"                       return 'PAREND';
 "|"                       return 'OR';
-"*"                       return 'STAR';
 "!"                       return 'NOT';
 <<EOF>>                   return 'EOF';
 
@@ -43,13 +42,9 @@ tag
 token
     : tag COLON tag
       {$$ = {type: "token", token: $3, tag: $1}}
-    | tag COLON STAR
-      {$$ = {type: "token", token: $3, tag: $1}}
     | tag COLON
       {$$ = {type: "token", token: '', tag: $1}}
     | tag
-      {$$ = {type: "token", token: $1}}
-    | STAR
       {$$ = {type: "token", token: $1}}
     | NOT token
       {$$ = {type: "not", e: $2}}
