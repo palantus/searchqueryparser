@@ -7,8 +7,12 @@ let instance = null
 
 class SearchQueryParser{
   async init(){
-    let bnf = await new Promise((r) => fs.readFile(path.join(__dirname, "searchtokens.jison"), "utf8", (err, data) => r(data)));
-    this.parser = new jison.Parser(bnf);
+    if(instance){
+      this.parser = instance.parser
+    } else {
+      let bnf = await new Promise((r) => fs.readFile(path.join(__dirname, "searchtokens.jison"), "utf8", (err, data) => r(data)));
+      this.parser = new jison.Parser(bnf);
+    }
     instance = this;
   }
 
