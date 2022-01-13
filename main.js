@@ -24,6 +24,12 @@ class SearchQueryParser{
   }
 
   parse(exp){
+    if(!this.parser){
+      if(instance.parser)
+        this.parser = instance.parser
+      else
+        throw "SearchQueryParser isn't initialized. Please wait for init promise to complete before using parse"
+    }
     return this.parser.parse(exp)
   }
 
